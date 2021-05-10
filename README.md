@@ -1,57 +1,70 @@
-# Project Name
+---
+page_type: sample
+languages:
+- javascript
+- nodejs
+name: "Add Microsoft authentication to Express.js application"
+description: "JavaScript end-to-end add Microsoft authentication with MSAL to Express.js application"
+products:
+- azure
+- azure-portal
+- vs-code
+- msal-node
+- msal-js
+- microsoft-identity-web
+- identity
+- developer-tools
+- app-service
+---
+# Add Microsoft authentication to Express.js application
 
-(short, 1-3 sentenced, description of the project)
+For a complete tutorial, please use the [Microsoft Documentation tutorial found here]().
 
-## Features
+## Express.js app
 
-This project framework provides the following features:
+This sample illustrates how to integrate MSAL authentication for the Microsoft Identity provider into an Express.js app to provide:
+* Login/logout
+* Route restrictions
+* Query a restricted API, such as Graph
 
-* Feature 1
-* Feature 2
-* ...
+## Usage
 
-## Getting Started
+1. Start by building the wrapper:
 
-### Prerequisites
+    ```bash
+    npm install
+    ```
 
-(ideally very short, if any)
+2. Then, configure required MSAL settings file in JSON (see: [appSettings.json](./TestApp/appSettings.json)). The file looks like the following:
 
-- OS
-- Library version
-- ...
+    ```JSON
+    "credentials": {
+        "clientId": process.env.AD_CLIENT_ID || "REPLACE-WITH-YOUR-APP-CLIENT-ID",
+        "tenantId": process.env.AD_TENANT_ID || "REPLACE-WITH-YOUR-APP-TENANT-ID",
+        "clientSecret": process.env.AD_CLIENT_ID_SECRET || "REPLACE-WITH-YOUR-APP-CLIENT-ID-SECRET"
+    },
+    ```
 
-### Installation
+3. Run the project. 
 
-(ideally very short)
+    ```bash
+    npm start
+    ```
 
-- npm install [package name]
-- mvn install
-- ...
+8. Open a browser at `http://localhost:8080`.
 
-### Quickstart
-(Add steps to get up and running quickly)
+## Remarks
 
-1. git clone [repository clone url]
-2. cd [respository name]
-3. ...
+### Session support
 
+Session support in this sample is provided by the [express-session](https://www.npmjs.com/package/express-session) package. **express-session** is considered unfit for production, and you should either implement your own session solution or use a more suitable 3rd party library.
 
-## Demo
+### Persistent caching
 
-A demo app is included to show how to use the project.
+MSAL Node has an in-memory cache by default. This sample also features a persistent cache plugin in order to save the cache to disk. This plugin is not meant to be production-ready. As such, you might want to implement persistent caching using a 3rd party library like [redis](https://redis.io/).
 
-To run the demo, follow these steps:
+## More information
 
-(Add steps to start up the demo)
-
-1.
-2.
-3.
-
-## Resources
-
-(Any additional resources or related projects)
-
-- Link to supporting information
-- Link to similar sample
-- ...
+* [Initializing a confidential client app with MSAL Node](https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-node/docs/initialize-confidential-client-application.md)
+* [MSAL Node Configuration options](https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-node/docs/configuration.md)
+* [Scenario: A web app that calls web APIs](https://docs.microsoft.com/azure/active-directory/develop/scenario-web-app-call-api-overview)

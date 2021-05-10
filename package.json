@@ -1,0 +1,25 @@
+{
+  "name": "express-msal-auth",
+  "version": "1.0.1",
+  "description": "A Node.js & Express web app calling Microsoft Graph API using MSAL Node",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@azure/msal-common": "^4.2.1",
+    "@azure/msal-node": "^1.0.3",
+    "axios": "^0.21.0",
+    "bootstrap": "^4.5.3",
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "jwks-rsa": "^1.12.3",
+    "uuid": "^8.3.1"
+  },
+  "devDependencies": {}
+}

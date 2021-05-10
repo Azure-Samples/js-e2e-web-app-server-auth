@@ -1,15 +1,30 @@
 const appSettings = () => {
 
-    // BASE_URI = `YOUR-APP-NAME.azurewebsites.net`
+    // BASE_URI = `YOUR-APP-NAME`
     const domainName = process.env.BASE_URI || "localhost";
     
-    const port = process.env.PORT || 8080;
-    const protocol = domainName.includes(".azurewebsites.net") ? "https" : "http";
-    const baseUri = `${protocol}://${domainName}:${port}`
+    let port, baseUri;
+    
+    // local development only
+    if (domainName === 'localhost') {
+        port = process.env.PORT || 8080;
+        baseUri = `http://${domainName}:${port}`;
+        console.log(`local development only baseUri = ${baseUri}`)
+    } else {
+        // deployed to Azure
+        port = 8080;
+        baseUri = `https://${domainName}.azurewebsites.net`;
+        console.log(`deploy to Azure baseUri = ${baseUri}`)
+    }
+    
+    
     
     const app_settings_vals = {
         "host": {
-            "port": port
+            "port": port,
+            "baseUri": baseUri,
+            "domainName": domainName,
+            "ver":"0.0.1"
         },
         "credentials": {
             "clientId": process.env.AD_CLIENT_ID || "REPLACE-WITH-YOUR-APP-CLIENT-ID",

@@ -1,7 +1,21 @@
 const fetchManager = require('./utils/fetchManager');
 
+const isConfigured = (req) => {
+    
+    if (req.app.locals.appSettings.credentials.clientId != 'REPLACE-WITH-YOUR-APP-CLIENT-ID' &&
+        req.app.locals.appSettings.credentials.tenantId != 'REPLACE-WITH-YOUR-APP-TENANT-ID' &&
+        req.app.locals.appSettings.credentials.clientSecret != 'REPLACE-WITH-YOUR-APP-CLIENT-ID-SECRET') {
+        console.log("appSettings is configured")
+        return true;
+    } else {
+        console.log("appSettings is NOT configured")
+        return false;
+    }
+}
+
 exports.getHomePage = (req, res, next) => {
-    res.render('home', { isAuthenticated: req.session.isAuthenticated });
+
+    res.render('home', { isAuthenticated: req.session.isAuthenticated, configured: isConfigured(req) });
 }
 
 exports.getIdPage = (req, res, next) => {
@@ -12,7 +26,7 @@ exports.getIdPage = (req, res, next) => {
         sub: req.session.idTokenClaims.sub
     };
 
-    res.render('id', { isAuthenticated: req.session.isAuthenticated, claims: claims });
+    res.render('id', { isAuthenticated: req.session.isAuthenticated, claims: claims, configured: isConfigured(req) });
 }
 
 exports.getProfilePage = async(req, res, next) => {
@@ -24,12 +38,11 @@ exports.getProfilePage = async(req, res, next) => {
         console.log(error)
     }
 
-    res.render('profile', { isAuthenticated: req.session.isAuthenticated, profile: profile });
+    res.render('profile', { isAuthenticated: req.session.isAuthenticated, profile: profile, configured: isConfigured(req) });
 }
 
 exports.getTenantPage = async(req, res, next) => {
     let tenant;
-    console.log("tenant")
 
     try {
         // Getting tenant information requires Admin level 
@@ -39,5 +52,5 @@ exports.getTenantPage = async(req, res, next) => {
         console.log(error)
     }
 
-    res.render('tenant', { isAuthenticated: req.session.isAuthenticated, tenant: tenant.value[0] });
+    res.render('tenant', { isAuthenticated: req.session.isAuthenticated, tenant: tenant.value[0], configured: isConfigured(req) });
 }

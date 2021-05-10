@@ -21,5 +21,10 @@
     "jwks-rsa": "^1.12.3",
     "uuid": "^8.3.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  },
+  "nodemonConfig": {
+    "ignore": ["src/data/cache.json", "README.md"]
+  }
 }
